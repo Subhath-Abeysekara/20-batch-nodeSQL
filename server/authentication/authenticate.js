@@ -1,11 +1,41 @@
-var api_access = require('./api_access')
+
 const jwt = require('jsonwebtoken');
+const { resolve } = require('path');
+
+const obj ={
+    'api_access_list' : [
+        {
+            'api_no' : 1,
+            'user_types' : ['superadmin']
+        },
+        {
+            'api_no' : 2,
+            'user_types' : ['superadmin','operator']
+        }
+    ]
+} 
+
+function check_authorization(api_no , user_type){
+    const availability = new Promise((resolve) => {
+        var newArray = obj.api_access_list.filter(function (el)
+    { 
+        if(el.api_no == api_no ){
+            console.log(user_type)
+            console.log(el.user_types.includes(user_type))
+            resolve(el.user_types.includes(user_type) )      
+        }
+    }
+    );
+    })
+    return availability 
+}
 
 function getDecode(req){
     let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
     let jwtSecretKey = process.env.JWT_SECRET_KEY;
-    try {
-        const token = req.header(tokenHeaderKey);
+    const response = new Promise((resolve) =>{
+        try {
+            const token = req.header(tokenHeaderKey);
         const verified = jwt.verify(token, jwtSecretKey);
         if(verified){
             console.log(jwt.decode(token))
@@ -15,28 +45,34 @@ function getDecode(req){
                 "verified": true,
                 "token" : jwt.decode(token)
             }
-            return response;
+            resolve(response);
         }else{
             const response = {
                 "status" : "error",
                 "massage" : error,
                 "verified": false
             }
-            return response
+            resolve(response)
         }
     } catch (error) {
-        return res.status(401).send(error);
+        const response = {
+            "status" : "error",
+            "massage" : error,
+            "verified": false
+        }
+        resolve(response);
     }
+    })
+    return response
 }
 
-function checkApiAccess(api_no , user_type){
-    return api_access(api_no , user_type)
-}
-
-module.exports = function authenticate(req , api_no){
-    const response = getDecode(req)
+module.exports =async function authenticate(req , api_no){
+    const response =await getDecode(req)
+    console.log(response)
     if(response.verified){
-        return checkApiAccess(api_no , response.token.user_type)
+        var condition =await check_authorization(api_no , response.token.userType)
+        console.log("condition ",condition)
+        return condition
     }
     return false
 }
