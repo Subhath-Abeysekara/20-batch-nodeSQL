@@ -3,6 +3,7 @@ var bodyparser = require('body-parser')
 var cors = require('cors')
 var path = require('path')
 const dotenv = require('dotenv');
+var validate_token = require('./authentication/authenticate')
 var app = express();
 const auth_router = require('./routes/auth_router')
 dotenv.config();

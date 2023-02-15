@@ -11,6 +11,10 @@ const obj ={
         {
             'api_no' : 2,
             'user_types' : ['superadmin','operator']
+        },
+        {
+            'api_no' : 3,
+            'user_types' : ['superadmin','operator','accountant']
         }
     ]
 } 
@@ -36,6 +40,14 @@ function getDecode(req){
     const response = new Promise((resolve) =>{
         try {
             const token = req.header(tokenHeaderKey);
+            if (token == null){
+                const response = {
+                    "status" : "error",
+                    "massage" : error,
+                    "verified": false
+                }
+                resolve(response)
+            }
         const verified = jwt.verify(token, jwtSecretKey);
         if(verified){
             console.log(jwt.decode(token))
