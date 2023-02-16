@@ -3,7 +3,7 @@ var validate_token = require('../../authentication/authenticate')
 
 module.exports = async function confirm_member(req , res){
     try{
-        var validity = await validate_token(req , 2)
+        var validity = await validate_token(req , 1)
         console.log(validity)
         if (!validity.condition){
             res.send("not valid")

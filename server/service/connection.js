@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   user:"sqluser",
   password:"password",
-  database : "20-batch"
+  database : "database"
 });
 connection.connect(function(err) {
     if (err) throw err;
