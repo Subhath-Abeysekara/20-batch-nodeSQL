@@ -1,6 +1,11 @@
 var connection = require('../service/connection')
 
-connection.query("CREATE TABLE booking (booking_id INT PRIMARY KEY,  BookedDate DATE, start_time TIME, end_time TIME ,rate INT , review VARCHAR(255) , vehicle_no VARCHAR(255) ,booking_method VARCHAR(255) , slot_id INT)", function (err, result, fields) {
+connection.query("CREATE TABLE booking (booking_id INT AUTO_INCREMENT PRIMARY KEY,  booked_date VARCHAR(255), start_time TIME, end_time TIME ,rate INT , review VARCHAR(255) , vehicle_no VARCHAR(255) ,booking_method VARCHAR(255) , slot_id INT)", function (err, result, fields) {
+  if (err) throw err;
+  console.log(result);
+});
+
+connection.query("CREATE TABLE slot (slot_id INT AUTO_INCREMENT PRIMARY KEY ,slot_price INT , availability BOOLEAN)", function (err, result, fields) {
   if (err) throw err;
   console.log(result);
 });

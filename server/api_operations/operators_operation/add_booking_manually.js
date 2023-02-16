@@ -16,23 +16,22 @@ module.exports = async function add_booking_manually(req , res){
         return
     }
     var sql = "SELECT * FROM slot WHERE slot_id = "+req.params.slot_id
-    connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
-        console.log(result)
-        if(!result.availability){
+    connection.query(sql, function (err, result0, fields) {
+        if (err) res.send(err);
+        if(!result0[0].availability){
             res.send("notavailable")
             return
         }
-    })
-    var sql = "UPDATE slot " + "SET availability = FALSE WHERE slot_id = "+req.params.slot_id
-    connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
-        console.log(result)
-        var sql = "INSERT INTO booking (BookedDate , start_time ,end_time ,rate ,review ,vehicle_no , booking_method , slot_id) " + "VALUES ('"+req.body.BookedDate+"','"+req.body.start_time+"','"+req.body.end_time+"','"+req.body.rate+"','"+req.body.review+"','"+req.body.vehicle_no+"','"+req.params.slot_id+"'booking_method)"
+        var sql = "INSERT INTO booking (booked_date , start_time ,end_time ,rate ,review ,vehicle_no , booking_method , slot_id) " + "VALUES ('"+req.body.BookedDate+"','"+req.body.start_time+"','"+req.body.end_time+"','"+req.body.rate+"','"+req.body.review+"','"+req.body.vehicle_no+"','"+req.body.booking_method+"','"+req.params.slot_id+")"
+        connection.query(sql, function (err, result, fields) {
+        if (err) res.send(err);
+        var sql = "UPDATE slot " + "SET availability = FALSE WHERE slot_id = "+req.params.slot_id
         connection.query(sql, function (err, result2, fields) {
-            if (err) throw err;
+            if (err) res.send(err);
             console.log(result2)
-        })
-    });
-    res.send("success")
+            })
+        });
+        res.send("success")
+    })
+    
 }

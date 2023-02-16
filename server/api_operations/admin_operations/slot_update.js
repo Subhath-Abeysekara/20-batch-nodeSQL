@@ -15,9 +15,9 @@ module.exports = async function update_slot(req , res){
         res.send("not valid")
         return
     }
-    var sql = "UPDATE slot " + "SET slot_price = '"+req.body.price+"' WHERE slot_id = "+req.params.slot_id
+    var sql = "UPDATE slot " + "SET slot_price = "+req.body.price+" WHERE slot_id = "+req.params.slot_id
     connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         console.log(result)
     });
     res.send("success")

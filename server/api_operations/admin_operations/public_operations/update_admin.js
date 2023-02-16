@@ -17,7 +17,7 @@ module.exports = async function update_superadmin(req , res){
     }
     var sql = "UPDATE user " + "SET firstname = '"+req.body.firstname+"', lastname = '"+req.body.lastname+"' , email = '"+req.body.email+"' , nic = '"+req.body.nic+"' , contact = '"+req.body.contact+"' WHERE user_id = "+validity.userId
     connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         console.log(result)
     });
     res.send("success")

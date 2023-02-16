@@ -16,7 +16,7 @@ module.exports =async function get_admin_profile(req , res){
         return
     }
     connection.query("SELECT * FROM admin INNER JOIN user ON admin.user_id=user.user_id AND admin.user_id="+validity.userId, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         res.send(result)   
       });
 }

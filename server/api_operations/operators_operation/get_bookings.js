@@ -16,7 +16,7 @@ module.exports =async function get_bookings(req , res){
         return
     }
     connection.query("SELECT * FROM booking", function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         res.send(result)   
       });
 }

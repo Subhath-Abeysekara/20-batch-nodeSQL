@@ -17,7 +17,7 @@ module.exports = async function confirm_member(req , res){
     }
     var sql = "UPDATE user " + "SET superadmin_status = 'confirm' WHERE user_id = "+req.params.user_id
     connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         console.log(result)
     });
     res.send("success")

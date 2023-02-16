@@ -16,7 +16,7 @@ module.exports =async function get_payment(req , res){
         return
     }
     connection.query("SELECT * FROM booking WHERE booked_id = "+req.params.booking_id, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         res.send((result.end_time-result.start_time)*result.rate)   
       });
 }

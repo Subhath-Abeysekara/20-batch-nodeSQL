@@ -21,7 +21,7 @@ module.exports = async function add_member(req , res){
     console.log(req.body)
     var sql = "INSERT INTO user (firstname , lastname ,email ,nic ,contact ,superadmin_status) " + "VALUES ('"+req.body.firstname+"','"+req.body.lastname+"','"+req.body.email+"','"+req.body.nic+"','"+req.body.contact+"','pending')"
     connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         console.log(result)
         const password = generate_password()
         const username = generate_username(req.body.firstname , result.insertId)
@@ -31,11 +31,11 @@ module.exports = async function add_member(req , res){
         }
         var sql2 = "INSERT INTO admin (user_id , position) " + "VALUES ("+result.insertId+",'"+req.body.position+"')"
         connection.query(sql2, function (err, result2, fields) {
-            if (err) throw err;
+            if (err) res.send(err);
             console.log(result2)
             var sql3 = "UPDATE user " + "SET username = '"+username+"', password = '"+password+"' WHERE user_id = "+result.insertId
             connection.query(sql3, function (err, result3, fields) {
-                if (err) throw err;
+                if (err) res.send(err);
                 console.log(result3)
               });
           });

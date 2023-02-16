@@ -16,7 +16,7 @@ module.exports =async function get_members(req , res){
         return
     }
     connection.query("SELECT * FROM user INNER JOIN admin ON user.user_id=admin.user_id", function (err, result, fields) {
-        if (err) throw err;
+        if (err) res.send(err);
         res.send(result)   
       });
 }
