@@ -2,12 +2,13 @@ var connection = require('../../service/connection')
 var generate_username = require('../../generate_username/generate_username')
 var generate_password = require('../../generate_username/generate_password')
 var sendMail = require('../../send_mails/send_mails')
+var validate_token = require('../../authentication/authenticate')
 
 module.exports = async function add_member(req , res){
     try{
         var validity = await validate_token(req , 2)
         console.log(validity)
-        if (!validity){
+        if (!validity.condition){
             res.send("not valid")
             return
         }

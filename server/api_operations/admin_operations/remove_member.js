@@ -1,10 +1,11 @@
 var connection = require('../../service/connection')
+var validate_token = require('../../authentication/authenticate')
 
 module.exports = async function removeMember(req , res){
     try{
         var validity = await validate_token(req , 2)
         console.log(validity)
-        if (!validity){
+        if (!validity.condition){
             res.send("not valid")
             return
         }

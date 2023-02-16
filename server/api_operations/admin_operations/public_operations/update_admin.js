@@ -1,7 +1,7 @@
-var connection = require('../../service/connection')
-var validate_token = require('../../authentication/authenticate')
+var connection = require('../../../service/connection')
+var validate_token = require('../../../authentication/authenticate')
 
-module.exports = async function confirm_member(req , res){
+module.exports = async function update_superadmin(req , res){
     try{
         var validity = await validate_token(req , 2)
         console.log(validity)
@@ -15,7 +15,7 @@ module.exports = async function confirm_member(req , res){
         res.send("not valid")
         return
     }
-    var sql = "UPDATE user " + "SET superadmin_status = 'confirm' WHERE user_id = "+req.params.user_id
+    var sql = "UPDATE user " + "SET firstname = '"+req.body.firstname+"', lastname = '"+req.body.lastname+"' , email = '"+req.body.email+"' , nic = '"+req.body.nic+"' , contact = '"+req.body.contact+"' WHERE user_id = "+validity.userId
     connection.query(sql, function (err, result, fields) {
         if (err) throw err;
         console.log(result)

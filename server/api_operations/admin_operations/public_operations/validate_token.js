@@ -1,5 +1,5 @@
 
-var validate_token = require('../../authentication/authenticate')
+var validate_token = require('../../../authentication/authenticate')
 
 module.exports = async function validate(req , res){
     var validity = await validate_token(req , 2)

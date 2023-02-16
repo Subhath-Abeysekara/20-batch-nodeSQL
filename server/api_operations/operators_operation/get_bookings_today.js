@@ -1,7 +1,7 @@
 var connection = require('../../service/connection')
 var validate_token = require('../../authentication/authenticate')
 
-module.exports = async function confirm_member(req , res){
+module.exports =async function get_bookings(req , res){
     try{
         var validity = await validate_token(req , 2)
         console.log(validity)
@@ -15,10 +15,9 @@ module.exports = async function confirm_member(req , res){
         res.send("not valid")
         return
     }
-    var sql = "UPDATE user " + "SET superadmin_status = 'confirm' WHERE user_id = "+req.params.user_id
-    connection.query(sql, function (err, result, fields) {
+    const date = new Date
+    connection.query("SELECT * FROM booking WHERE booked_date = "+date, function (err, result, fields) {
         if (err) throw err;
-        console.log(result)
-    });
-    res.send("success")
+        res.send(result)   
+      });
 }

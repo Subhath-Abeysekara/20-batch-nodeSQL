@@ -84,7 +84,13 @@ module.exports =async function authenticate(req , api_no){
     if(response.verified){
         var condition =await check_authorization(api_no , response.token.userType)
         console.log("condition ",condition)
-        return condition
+        return {
+            "condition" : true,
+            "userId" : response.token.userId
+        }
     }
-    return false
+    return {
+        "condition" : false,
+        "userId" : null
+    }
 }

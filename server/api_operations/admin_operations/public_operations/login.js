@@ -1,5 +1,5 @@
-var connection = require('../../service/connection')
-var generate_token = require('../../authentication/generate_token')
+var connection = require('../../../service/connection')
+var generate_token = require('../../../authentication/generate_token')
 
 module.exports = function login(req , res){
     console.log(req.body)
