@@ -10,7 +10,10 @@ module.exports = function login(req , res){
                 if (err) res.send(err);
                 console.log(result2)
                 const token = generate_token(result[0].user_id , result2[0].position)
-                res.send(token)
+                res.send({
+                    token:token,
+                    position:result2[0].position
+                })
               });
         }
         else{

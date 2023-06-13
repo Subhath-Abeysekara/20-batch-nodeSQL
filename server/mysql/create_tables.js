@@ -5,7 +5,7 @@ connection.query("CREATE TABLE booking (booking_id INT AUTO_INCREMENT PRIMARY KE
   console.log(result);
 });
 
-connection.query("CREATE TABLE slot (slot_id INT AUTO_INCREMENT PRIMARY KEY ,slot_price INT , availability BOOLEAN)", function (err, result, fields) {
+connection.query("CREATE TABLE slot (slot_id INT AUTO_INCREMENT PRIMARY KEY ,slot_price INT , availability BOOLEAN ,slot_type VARCHAR(255) )", function (err, result, fields) {
   if (err) throw err;
   console.log(result);
 });
