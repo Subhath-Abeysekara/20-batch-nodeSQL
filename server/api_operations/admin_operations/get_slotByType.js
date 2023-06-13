@@ -15,7 +15,7 @@ module.exports = async function get_slot(req , res){
         res.send("not valid")
         return
     }
-    var sql = "SELECT * FROM slot WHERE slot_type = '"+req.params.type+"'"
+    var sql = "SELECT * FROM slot WHERE slot_type = '"+req.params.type+"' and availability = TRUE"
     connection.query(sql, function (err, result, fields) {
         if (err) res.send(err);
         console.log(result)
