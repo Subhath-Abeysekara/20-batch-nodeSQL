@@ -5,6 +5,7 @@ module.exports = function login(req , res){
     console.log(req.body)
     connection.query("select * from user where username = '"+req.body.username+"'", function (err, result, fields) {
         if (err) res.send(err);
+        if(result.length>0){
         if(req.body.password===result[0].password){
             connection.query("select * from admin where user_id = "+result[0].user_id, function (err, result2, fields) {
                 if (err) res.send(err);
@@ -18,6 +19,10 @@ module.exports = function login(req , res){
         }
         else{
             res.send("error username or password")
-        }   
+        }
+    }
+    else{
+        res.send("error username or password")
+    }   
       });
 }
