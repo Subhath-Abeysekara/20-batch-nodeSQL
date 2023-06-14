@@ -15,8 +15,9 @@ module.exports = async function add_booking_manually(req , res){
         res.send("not valid")
         return
     }
-    var sql = "SELECT * FROM slot WHERE slot_id = "+req.params.slot_id
-    connection.query(sql, function (err, result0, fields) {
+    try{
+        var sql = "SELECT * FROM slot WHERE slot_id = "+req.params.slot_id
+    connection.query(sql, function (err, result0, fields){
         if (err) res.send(err);
         if(!result0[0].availability){
             res.send("notavailable")
@@ -26,12 +27,16 @@ module.exports = async function add_booking_manually(req , res){
         connection.query(sql, function (err, result, fields) {
         if (err) res.send(err);
         var sql = "UPDATE slot " + "SET availability = FALSE WHERE slot_id = "+req.params.slot_id
-        connection.query(sql, function (err, result2, fields) {
+        connection.query(sql, function (err, result2, fields){
             if (err) res.send(err);
             console.log(result2)
+            res.send("success")
             })
         });
-        res.send("success")
     })
+    }
+    catch{
+        res.send("Error Adding")
+    }
     
 }
